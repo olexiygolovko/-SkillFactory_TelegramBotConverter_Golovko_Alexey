@@ -27,7 +27,7 @@ class Convertor:
         try:
             amount = float(amount)
         except ValueError:
-            raise APIException(f'Укажите объем конвертируемой валюты верно - {amount}!')
+            raise APIException(f'Укажите количество конвертируемой валюты верно - {amount}!')
 
         r = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym={base_key}&tsyms={sym_key}')
         total_base = json.loads(r.content)[keys[sym.lower()]] * amount
