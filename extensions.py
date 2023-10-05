@@ -14,20 +14,20 @@ class Convertor:
         try:
             base_key = keys[base.lower()]
         except KeyError:
-            raise APIException(f"Укажите валюту верно - {base}!")
+            raise APIException(f"Incorrect currency specified - {base}! 👉 /start")
 
         try:
             sym_key = keys[sym.lower()]
         except KeyError:
-            raise APIException(f"Укажите валюту верно - {sym}!")
+            raise APIException(f"The currency specified is incorrect - {sym}! 👉 /start")
 
         if base_key == sym_key:
-            raise APIException(f'Невозможно конвертировать одинаковые валюты - {base}!')
+            raise APIException(f'Unable to convert identical currencies - {base}! 👉 /start')
 
         try:
             amount = float(amount)
         except ValueError:
-            raise APIException(f'Укажите количество конвертируемой валюты верно - {amount}!')
+            raise APIException(f'The amount of currency indicated is incorrect - {amount}! 👉 /start')
 
         r = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym={base_key}&tsyms={sym_key}')
         total_base = json.loads(r.content)[keys[sym.lower()]] * amount

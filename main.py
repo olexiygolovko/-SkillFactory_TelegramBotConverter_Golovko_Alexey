@@ -20,18 +20,18 @@ bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(commands=['start', 'help'])
 def start(message: telebot.types.Message):
-    text = f'🤖 Привет! Я телеграмм бот - WhatCourseBot\n' \
-           f'Моя задача - конвертировать валюту\n' \
-           f'/values - список доступных валют\n' \
-           f'/convert - приступить к конвертации\n' \
-           f'/help - вывести навигацию повторно\n' \
-           f'/start - в начало'
+    text = f'🤖 Hello! I am a telegram bot - WhatCourseBot\n' \
+           f'My job is to convert currency\n' \
+           f'/convert - start converting\n' \
+           f'/values - list of available currencies\n' \
+           f'/help - display navigation again\n' \
+           f'/start - to the start'
     bot.send_message(message.chat.id, text)
 
 
 @bot.message_handler(commands=['values'])
 def values(message: telebot.types.Message):
-    text = f'🤓 Доступные валюты:'
+    text = f'🤓 Available currencies:'
     for i in keys.keys():
         text = '\n✅ '.join((text, i))
     bot.send_message(message.chat.id, text)
@@ -39,21 +39,21 @@ def values(message: telebot.types.Message):
 
 @bot.message_handler(commands=['convert'])
 def values(message: telebot.types.Message):
-    text = 'Выберите валюту из которой конвертировать:'
+    text = 'Select the currency from which to convert:'
     bot.send_message(message.chat.id, text, reply_markup=create_markup())
     bot.register_next_step_handler(message, base_handler)
 
 
 def base_handler(message: telebot.types.Message):
     base = message.text.strip().lower()
-    text = 'Выберите валюту в которую конвертировать:'
+    text = 'Select the currency to convert to:'
     bot.send_message(message.chat.id, text, reply_markup=create_markup(base))
     bot.register_next_step_handler(message, quote_handler, base)
 
 
 def quote_handler(message: telebot.types.Message, base):
     sym = message.text.strip().lower()
-    text = 'Укажите количество конвертируемой валюты:'
+    text = 'Specify the amount of currency to be converted:'
     bot.send_message(message.chat.id, text)
     bot.register_next_step_handler(message, amount_handler, base, sym)
 
@@ -63,9 +63,9 @@ def amount_handler(message: telebot.types.Message, base, sym):
     try:
         new_price = Convertor.get_price(base, sym, amount)
     except APIException as e:
-        bot.send_message(message.chat.id, f'Ошибка конвертации:\n{e} ')
+        bot.send_message(message.chat.id, f'Conversion error:\n{e} ')
     else:
-        text = f'Курс {amount} {base} - {new_price} {sym} '
+        text = f'Rate {amount} {base} = {new_price} {sym} '
         bot.send_message(message.chat.id, text)
 
 

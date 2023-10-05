@@ -1,10 +1,18 @@
+from dotenv import load_dotenv
+import os
 
-TOKEN = '5440778931:AAGgMa7xIFgjFfeYtE3-5Rs550nQ4VY3jlI'
+
+load_dotenv()
+
+
+TOKEN = os.getenv("TOKEN_KEY")
 
 keys = {
     '$': 'USD',
     '€': 'EUR',
-    '₽': 'RUB',
     '￡': 'GBP',
-    '¥': 'JPY'
+    '¥': 'JPY',
+    '₽': 'RUB'
 }
+
+load_dotenv()
