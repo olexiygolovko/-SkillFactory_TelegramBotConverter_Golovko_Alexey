@@ -5,7 +5,7 @@ import os
 load_dotenv()
 
 
-TOKEN = os.getenv("TOKEN_KEY")
+TOKEN = os.getenv('TOKEN_KEY') #your token should be here
 
 keys = {
     '$': 'USD',
@@ -16,4 +16,5 @@ keys = {
 }
 
 load_dotenv()
+
 
